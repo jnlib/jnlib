@@ -585,7 +585,7 @@ function formatAiText(raw) {
     if (!t) { html += '<br>'; continue; }
 
     const isGist    = !firstDone && t.includes('귀하께서 접수하신 민원은');
-    const isClosing = t.startsWith('우리 도서관에 대한') || t.startsWith('오늘도 즐거운');
+    const isClosing = t.includes('우리 도서관에 대한') || t.includes('오늘도 즐거운') || t.includes('자세한 문의는');
     const isRule    = !isGist && !isClosing && (
       t.includes('1차') || t.includes('이용제한') || t.includes('경고') || t.includes('주의') ||
       t.match(/\d+℃/) || (t.includes('운영') && t.includes('℃')) ||
@@ -675,7 +675,7 @@ async function done() {
   const msgEl = document.getElementById('aiMsg');
   msgEl.innerHTML = '<span class="t-cursor"></span>';
   await sleep(150);
-  msgEl.innerHTML = aiText;
+  msgEl.innerHTML = formatAiText(aiText);
   await sleep(300);
 
   const sw = document.getElementById('sendWrap');
