@@ -723,7 +723,7 @@ if (data.error) {
   return fallback;
 }
 
-return JSON.stringify(data);
+return data.summary;
   } catch(e) { return fallback; }
 }
 
