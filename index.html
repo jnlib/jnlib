@@ -675,7 +675,7 @@ async function done() {
   const msgEl = document.getElementById('aiMsg');
   msgEl.innerHTML = '<span class="t-cursor"></span>';
   await sleep(150);
-  msgEl.innerHTML = formatAiText(aiText);
+  msgEl.innerHTML = aiText;
   await sleep(300);
 
   const sw = document.getElementById('sendWrap');
