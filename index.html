@@ -323,7 +323,7 @@ textarea.t-txt::placeholder{color:rgba(7,33,58,.25)}
 .msg-body{display:block;margin-bottom:4px;color:var(--text)}
 
 /* CLOSING */
-.msg-closing{display:block;margin-top:10px;color:var(--muted);font-size:.87em;line-height:1.75}
+.msg-closing{display:block;margin-top:10px;color:var(--muted);font-size:.94em;line-height:1.92}
 
 .t-cursor{display:inline-block;width:1.5px;height:.85em;
   background:var(--teal2);margin-left:2px;vertical-align:middle;animation:blink .7s step-end infinite}
@@ -593,7 +593,7 @@ function formatAiText(raw) {
     );
 
     if (isGist) {
-      html += `<span class="msg-gist">${t}</span>`;
+      html += `<span class="msg-gist">${t.replace(/'([^']+)'/, `'<span style="color:var(--teal2);font-weight:900">$1</span>'`)}</span>`;
       firstDone = true;
     } else if (isClosing) {
       html += `<span class="msg-closing">${t}</span>`;
