@@ -704,8 +704,26 @@ async function callWorker(content) {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({content})
     });
-    const data = await res.json();
-    return data.summary || fallback;
+let data;
+try {
+  data = await res.json();
+  console.log('WORKER RESPONSE:', data);
+} catch (e) {
+  console.log('JSON PARSE FAIL', e);
+  return fallback;
+}
+
+if (!data || typeof data !== 'object') {
+  console.log('INVALID DATA');
+  return fallback;
+}
+
+if (data.error) {
+  console.log('WORKER ERROR:', data.error);
+  return fallback;
+}
+
+return data.summary || fallback;
   } catch(e) { return fallback; }
 }
 
