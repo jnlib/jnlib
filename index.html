@@ -656,6 +656,8 @@ async function renderResult(data){
   const answerBody = document.getElementById('answerBody');
   const answerWrap = document.getElementById('answerWrap');
 
+  // 디버그 토스트
+  if(data._debug) toast(data._debug);
   // B: 햅틱 피드백
   if(navigator.vibrate) navigator.vibrate([12, 60, 8]);
 
@@ -743,16 +745,25 @@ async function animateCards(){
 }
 
 async function callWorker(content){
-  const fallback = {gist:'민원 관련', sections:[]};
+  const fallback = {gist:'민원 관련', sections:[], _debug:'fallback'};
   try{
     const res = await fetch(CFG.workerUrl+'/analyze',{
       method:'POST', headers:{'Content-Type':'application/json'},
       body:JSON.stringify({content})
     });
-    const data = await res.json();
-    if(!data||data.error) return fallback;
+    const raw = await res.text();
+    let data;
+    try{ data = JSON.parse(raw); } catch(e){
+      return {...fallback, _debug:`JSON파싱실패: ${raw.slice(0,80)}`};
+    }
+    if(!res.ok) return {...fallback, _debug:`HTTP${res.status}: ${raw.slice(0,80)}`};
+    if(data.error) return {...fallback, _debug:`워커오류: ${data.error}`};
+    if(!Array.isArray(data.sections)) return {...fallback, _debug:`sections없음: ${JSON.stringify(data).slice(0,100)}`};
+    data._debug = `OK · sections:${data.sections.length} · gist:${data.gist}`;
     return data;
-  }catch(e){ return fallback; }
+  }catch(e){
+    return {...fallback, _debug:`네트워크오류: ${e.message}`};
+  }
 }
 
 async function sendEmail(content, data){
