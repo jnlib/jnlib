@@ -176,45 +176,73 @@ textarea.t-txt::placeholder{color:rgba(7,33,58,.25)}
 /* 결과 */
 .ph-result{position:absolute;inset:0;display:flex;flex-direction:column;
   opacity:0;pointer-events:none;transition:opacity .4s;
-  overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;background:var(--bg)}
+  overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;
+  background:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(0,207,192,.11) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 95%,rgba(49,130,255,.08) 0%,transparent 55%),
+    linear-gradient(165deg,#f2f6ff 0%,#eaf0ff 45%,#eef8f6 100%)}
 .ph-result::-webkit-scrollbar{width:3px}
 .ph-result::-webkit-scrollbar-track{background:transparent}
 .ph-result::-webkit-scrollbar-thumb{background:rgba(0,207,192,.25);border-radius:3px}
 .ph-result.show{opacity:1;pointer-events:all}
+
 .res-mascot-zone{flex-shrink:0;display:flex;flex-direction:column;align-items:center;
-  padding:20px 0 0;position:relative}
-.res-mascot-img{width:88px;height:88px;object-fit:contain;position:relative;z-index:3;
-  filter:drop-shadow(0 6px 18px rgba(0,207,192,.28)) drop-shadow(0 2px 6px rgba(7,33,58,.1));
-  animation:floatY 4s ease-in-out infinite}
+  padding:24px 0 4px;position:relative}
+.res-mascot-glow{position:absolute;top:8px;left:50%;transform:translateX(-50%);
+  width:170px;height:170px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(ellipse 70% 70% at 50% 50%,rgba(0,207,192,.20) 0%,rgba(49,130,255,.07) 55%,transparent 75%);
+  animation:glowBreath 4s ease-in-out infinite;filter:blur(10px)}
+@keyframes glowBreath{0%,100%{opacity:.65;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.1)}}
+
+.res-mascot-img{width:104px;height:104px;object-fit:contain;position:relative;z-index:3;
+  filter:drop-shadow(0 8px 22px rgba(0,207,192,.32)) drop-shadow(0 2px 8px rgba(7,33,58,.12));
+  animation:mascotTalk 2.8s ease-in-out infinite}
+@keyframes mascotTalk{
+  0%  {transform:translateY(0)   rotate(0deg)    scale(1)}
+  12% {transform:translateY(-6px) rotate(1.3deg)  scale(1.025)}
+  25% {transform:translateY(-3px) rotate(-0.8deg) scale(1.01)}
+  38% {transform:translateY(-8px) rotate(1.6deg)  scale(1.03)}
+  50% {transform:translateY(-2px) rotate(-0.5deg) scale(1)}
+  62% {transform:translateY(-6px) rotate(1deg)    scale(1.015)}
+  75% {transform:translateY(-1px) rotate(-1.1deg) scale(1.01)}
+  88% {transform:translateY(-5px) rotate(0.7deg)  scale(1.008)}
+  100%{transform:translateY(0)   rotate(0deg)    scale(1)}
+}
 .res-mascot-img.bounce{animation:mascotBounce .65s cubic-bezier(.36,.07,.19,.97) both}
 @keyframes mascotBounce{
-  0%{transform:translateY(-28px) scale(.85);opacity:0}40%{transform:translateY(8px) scale(1.06);opacity:1}
-  65%{transform:translateY(-6px) scale(.97)}80%{transform:translateY(3px) scale(1.02)}
+  0%  {transform:translateY(-28px) scale(.85);opacity:0}
+  40% {transform:translateY(8px) scale(1.06);opacity:1}
+  65% {transform:translateY(-6px) scale(.97)}
+  80% {transform:translateY(3px) scale(1.02)}
   100%{transform:translateY(0) scale(1);opacity:1}}
-.answer-wrap{margin:10px 16px 0;background:#fff;border-radius:16px;
-  border:1px solid rgba(0,207,192,.13);box-shadow:0 2px 18px rgba(7,33,58,.07);overflow:hidden;
+.res-mascot-img.talking{animation:mascotTalk 2.8s ease-in-out infinite}
+
+.answer-wrap{margin:12px 16px 0;background:rgba(255,255,255,.97);border-radius:18px;
+  border:1px solid rgba(0,207,192,.15);
+  box-shadow:0 4px 24px rgba(7,33,58,.09),0 0 0 1px rgba(255,255,255,.7);
+  overflow:hidden;
   opacity:0;transform:translateY(10px) scale(.97);transform-origin:top center;
   transition:opacity .55s ease,transform .55s cubic-bezier(.2,.8,.3,1)}
 .answer-wrap.in{opacity:1;transform:translateY(0) scale(1)}
-.answer-head{height:3px;background:linear-gradient(90deg,var(--teal),var(--blue) 70%,var(--teal));
+.answer-head{height:4px;background:linear-gradient(90deg,var(--teal),var(--blue) 70%,var(--teal));
   background-size:200% 100%;animation:flowLine 4s linear infinite}
-.answer-body{padding:17px 17px 15px;display:flex;flex-direction:column;gap:0}
-.ans-gist{font-size:.94em;font-weight:700;color:var(--navy2);line-height:1.65;
-  padding-bottom:13px;margin-bottom:13px;border-bottom:1px solid rgba(0,207,192,.1)}
+.answer-body{padding:20px 18px 16px;display:flex;flex-direction:column;gap:0}
+
+.ans-gist{font-size:1.07em;font-weight:700;color:var(--navy2);line-height:1.78;
+  padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid rgba(0,207,192,.12)}
 .ans-gist em{font-style:normal;background:linear-gradient(130deg,var(--teal2),var(--blue));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900}
-.ans-rule-block{margin-bottom:13px;padding:12px 13px;
-  background:rgba(0,207,192,.04);border-radius:10px;border-left:3px solid var(--teal)}
-.ans-rule-intro{font-size:.88em;color:var(--text2);line-height:1.85;margin-bottom:10px}
-.ans-act{font-size:.88em;color:var(--text2);line-height:1.8;margin-bottom:8px}
-.ans-penalty{font-size:.86em;color:var(--text2);line-height:1.7}
-.ans-topic-block{margin-bottom:13px;padding:12px 13px;
-  background:rgba(49,130,255,.04);border-radius:10px;border-left:3px solid rgba(49,130,255,.5)}
-.ans-topic-title{font-size:.78em;font-weight:700;color:var(--blue);margin-bottom:5px}
-.ans-topic-content{font-size:.86em;color:var(--text2);line-height:1.78}
-.ans-closing{font-size:.93em;font-weight:700;color:var(--navy2);line-height:1.65;
-  padding-top:13px;margin-top:13px;border-top:1px dashed rgba(0,207,192,.18)}
-.ans-closing-line{display:block;margin-bottom:7px}
+.ans-rule-block{margin-bottom:15px;padding:14px 15px;
+  background:rgba(0,207,192,.05);border-radius:12px;border-left:4px solid var(--teal)}
+.ans-rule-intro{font-size:1.0em;color:var(--text2);line-height:1.92;margin-bottom:11px}
+.ans-act{font-size:1.0em;color:var(--text2);line-height:1.88;margin-bottom:10px}
+.ans-penalty{font-size:.98em;color:var(--text2);line-height:1.82;font-weight:500}
+.ans-topic-block{margin-bottom:15px;padding:14px 15px;
+  background:rgba(49,130,255,.05);border-radius:12px;border-left:4px solid rgba(49,130,255,.55)}
+.ans-topic-title{font-size:.92em;font-weight:700;color:var(--blue);margin-bottom:7px}
+.ans-topic-content{font-size:1.0em;color:var(--text2);line-height:1.9}
+.ans-closing{font-size:1.04em;font-weight:700;color:var(--navy2);line-height:1.85;
+  padding-top:14px;margin-top:14px;border-top:1px dashed rgba(0,207,192,.2)}
+.ans-closing-line{display:block;margin-bottom:9px}
 .ans-closing-line:last-child{margin-bottom:0}
 .deliver-wrap{margin:12px 16px 28px;opacity:0;transform:translateY(20px) scale(.97);
   transition:opacity .35s,transform .35s}
@@ -377,6 +405,7 @@ textarea.t-txt::placeholder{color:rgba(7,33,58,.25)}
       </div>
       <div class="ph-result" id="phResult">
         <div class="res-mascot-zone">
+          <div class="res-mascot-glow"></div>
           <img class="res-mascot-img" id="resMascot" src="https://raw.githubusercontent.com/jnlib/jnlib/main/mascot.png" alt="">
         </div>
         <div class="answer-wrap" id="answerWrap">
@@ -510,6 +539,9 @@ async function callWorker(content) {
     });
 
     if (!res.ok) {
+      if (res.status === 429) {
+        toast('AI 서버가 잠시 바쁩니다. 잠시 후 다시 시도해 주세요 🙏', 4000);
+      }
       console.warn('[Worker] HTTP', res.status);
       return fallback;
     }
@@ -556,11 +588,15 @@ async function sendEmail(content, data) {
 
 /* ── 결과 렌더링 ── */
 async function renderResult(data) {
-  /* 마스코트 바운스 */
+  /* 마스코트 바운스 후 talking 전환 */
   const mascot = document.getElementById('resMascot');
-  mascot.classList.remove('bounce');
+  mascot.classList.remove('bounce', 'talking');
   void mascot.offsetWidth;
   mascot.classList.add('bounce');
+  setTimeout(() => {
+    mascot.classList.remove('bounce');
+    mascot.classList.add('talking');
+  }, 800);
 
   if (navigator.vibrate) navigator.vibrate([12, 60, 8]);
 
@@ -695,7 +731,7 @@ function restart() {
 
   document.getElementById('phResult').classList.remove('show');
   document.getElementById('answerWrap').classList.remove('in');
-  document.getElementById('resMascot').classList.remove('bounce');
+  document.getElementById('resMascot').classList.remove('bounce', 'talking');
   document.getElementById('answerBody').innerHTML          = '';
   document.getElementById('deliverWrap').classList.remove('in');
   document.getElementById('deliverFill').style.width      = '0%';
