@@ -542,7 +542,7 @@ async function callWorker(content) {
       if (res.status === 429) {
         toast('AI 서버가 잠시 바쁩니다. 잠시 후 다시 시도해 주세요 🙏', 4000);
       }
-      console.warn('[Worker] HTTP', res.status);
+      const errBody = await res.json().catch(() => ({})); toast('에러: ' + JSON.stringify(errBody), 8000); console.warn('[Worker] HTTP', res.status, errBody);
       return fallback;
     }
 
