@@ -604,7 +604,7 @@ function renderResult(data){
     });
   }
 
-  html+=`<div class="ans-closing">접수하신 민원은 담당자에게 즉시 전달되었으며, 확인 후 안내드리겠습니다.<br><span style="font-size:.92em">우리 도서관에 대한 관심에 감사드립니다.</span></div>`;
+  html+=`<div class="ans-closing">접수하신 민원은 담당자에게 즉시 전달되었으며, 확인 후 안내드리겠습니다.<br><br>우리 도서관에 대한 관심에 감사드리며, 앞으로도 이용자분들의 쾌적한 시설 이용을 위해 노력하겠습니다.<br><br>오늘도 즐거운 하루 보내시길 바라며, 자세한 문의는 안내데스크 방문 또는 유선연락(721-0729) 부탁드립니다.</div>`;
 
   document.getElementById('answerBody').innerHTML=html;
   setTimeout(()=>document.getElementById('answerWrap').classList.add('in'),80);
