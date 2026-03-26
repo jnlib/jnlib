@@ -274,23 +274,14 @@ textarea.t-txt::placeholder{color:rgba(7,33,58,.25)}
 .ans-rule-block{margin-bottom:13px;padding:12px 13px;
   background:rgba(0,207,192,.04);
   border-radius:10px;border-left:3px solid var(--teal)}
-.ans-rule-intro{font-size:.84em;color:var(--text2);line-height:1.75;margin-bottom:10px}
+.ans-rule-intro{font-size:.88em;color:var(--text2);line-height:1.85;margin-bottom:10px}
 .ans-rule-item{margin-bottom:10px}
 .ans-rule-item:last-child{margin-bottom:0}
 .ans-rule-name{font-size:.82em;font-weight:700;color:var(--teal2);margin-bottom:3px}
 .ans-act{font-size:.83em;color:var(--text2);line-height:1.7;margin-bottom:8px}
 
 /* 조치기준 — 태그 나열, 표 없음 */
-.ans-penalty-label{font-size:.68em;font-weight:700;color:var(--muted);
-  font-family:'Share Tech Mono',monospace;letter-spacing:.08em;margin-bottom:6px}
-.ans-penalty-tags{display:flex;flex-wrap:wrap;gap:5px}
-.p-tag{display:inline-flex;align-items:center;gap:4px;
-  padding:4px 9px;border-radius:7px;font-size:.77em;font-weight:700;border:1px solid}
-.p-tag-1{background:rgba(0,207,192,.07);border-color:rgba(0,207,192,.22);color:var(--teal2)}
-.p-tag-2{background:rgba(245,160,0,.07);border-color:rgba(245,160,0,.28);color:#9a6400}
-.p-tag-3{background:rgba(220,110,40,.07);border-color:rgba(220,110,40,.28);color:#8c4200}
-.p-tag-4{background:rgba(214,64,64,.07);border-color:rgba(214,64,64,.22);color:#b02828}
-.p-tag-etc{background:rgba(122,154,184,.07);border-color:rgba(122,154,184,.22);color:var(--muted)}
+.ans-penalty{font-size:.85em;color:var(--text2);line-height:1.7;margin-top:4px}
 
 /* 토픽 블록 */
 .ans-topic-block{margin-bottom:13px;padding:12px 13px;
@@ -301,17 +292,15 @@ textarea.t-txt::placeholder{color:rgba(7,33,58,.25)}
   margin-bottom:5px;letter-spacing:.01em}
 .ans-topic-content{font-size:.85em;color:var(--text2);line-height:1.78}
 
-/* 기본값 */
-.ans-default{text-align:center;padding:6px 0 4px}
-.ans-default-ico{font-size:1.7em;margin-bottom:8px}
-.ans-default-txt{font-size:.87em;color:var(--text2);line-height:1.72}
+
 
 /* 마무리 */
-.ans-closing{font-size:.84em;color:var(--muted);line-height:1.7;
-  padding-top:12px;margin-top:12px;
-  border-top:1px dashed rgba(0,207,192,.15)}
+.ans-closing{font-size:.93em;font-weight:500;color:var(--text2);line-height:1.95;
+  padding-top:13px;margin-top:13px;
+  border-top:1px dashed rgba(0,207,192,.18)}
 
 /* ── 전달 카드 ── */
+/* 전달 카드 */
 .deliver-wrap{margin:11px 16px 24px;
   opacity:0;transform:translateY(10px);
   transition:opacity .45s,transform .45s}
@@ -557,10 +546,9 @@ function next(){
   go(2);
 }
 
-function buildPenaltyTags(penaltyStr){
-  const cls=['p-tag-1','p-tag-2','p-tag-3','p-tag-4'];
-  return penaltyStr.split('/').map(s=>s.trim()).filter(Boolean)
-    .map((p,i)=>`<span class="p-tag ${cls[i]||'p-tag-etc'}">${p}</span>`).join('');
+function buildPenaltyText(penaltyStr){
+  // "1차: 주의 / 2차: 경고 / ..." → "1차 주의, 2차 경고, ..." 한 줄
+  return penaltyStr.split('/').map(s=>s.trim()).filter(Boolean).join(' · ');
 }
 
 function renderResult(data){
@@ -573,27 +561,20 @@ function renderResult(data){
 
   html+=`<div class="ans-gist">귀하께서 접수하신 민원은 <em>'${gist}'</em>에 관한 것으로 이해됩니다.</div>`;
 
-  if(sections.length===0){
-    html+=`<div class="ans-default"><div class="ans-default-ico">📬</div><div class="ans-default-txt">담당자가 내용을 확인한 후<br>빠르게 안내드리겠습니다.</div></div>`;
-  } else {
+  if(sections.length>0){
     const sanctions=sections.filter(s=>s.type==='sanction');
     const topics=sections.filter(s=>s.type==='topic');
 
     if(sanctions.length>0){
-      html+=`<div class="ans-rule-block">`;
-      html+=`<div class="ans-rule-intro">현재 우리 도서관에서는 「이용자 준수사항 위반행위별 조치기준」을 마련하여 운영하고 있으며, 귀하께서 언급하신 사안과 관련하여 아래와 같이 안내드립니다.</div>`;
       sanctions.forEach(s=>{
-        html+=`<div class="ans-rule-item">`;
-        html+=`<div class="ans-rule-name">▪ ${s.title}${s.no?` <span style="font-size:.85em;color:var(--muted);font-weight:400">(${s.no}번)</span>`:''}`;
-        html+=`</div>`;
-        html+=`<div class="ans-act">${s.act}</div>`;
+        html+=`<div class="ans-rule-block">`;
+        html+=`<div class="ans-rule-intro">현재 우리 도서관에서는 「이용자 준수사항 위반행위별 조치기준」을 마련하여 운영하고 있습니다.</div>`;
+        html+=`<div class="ans-act">귀하께서 언급하신 사안은 위반행위 중 '<strong>${s.act}</strong>'에 해당되며, ${s.no}번 기준에 따라 아래와 같은 조치가 가능합니다.</div>`;
         if(s.penalty){
-          html+=`<div class="ans-penalty-label">조치기준</div>`;
-          html+=`<div class="ans-penalty-tags">${buildPenaltyTags(s.penalty)}</div>`;
+          html+=`<div class="ans-penalty">(${buildPenaltyText(s.penalty)})</div>`;
         }
         html+=`</div>`;
       });
-      html+=`</div>`;
     }
 
     topics.forEach(t=>{
@@ -604,7 +585,7 @@ function renderResult(data){
     });
   }
 
-  html+=`<div class="ans-closing">접수하신 민원은 담당자에게 즉시 전달되었으며, 확인 후 안내드리겠습니다.<br><br>우리 도서관에 대한 관심에 감사드리며, 앞으로도 이용자분들의 쾌적한 시설 이용을 위해 노력하겠습니다.<br><br>오늘도 즐거운 하루 보내시길 바라며, 자세한 문의는 안내데스크 방문 또는 유선연락(721-0729) 부탁드립니다.</div>`;
+  html+=`<div class="ans-closing">접수하신 민원은 담당자에게 즉시 전달하여 확인 및 조치하도록 하겠습니다.<br><br>우리 도서관에 대한 관심에 감사드리며, 앞으로도 이용자분들의 쾌적한 시설 이용을 위해 노력하겠습니다.<br><br>오늘도 즐거운 하루 보내시길 바라며, 자세한 문의는 안내데스크 방문 또는 유선연락(721-0729) 부탁드립니다.</div>`;
 
   document.getElementById('answerBody').innerHTML=html;
   setTimeout(()=>document.getElementById('answerWrap').classList.add('in'),80);
