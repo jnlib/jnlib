@@ -134,8 +134,12 @@ textarea.t-txt::placeholder{color:rgba(7,33,58,.25)}
 
 /* S2 로딩 */
 #s2{background:transparent}
+
+/* ★ 핵심 수정: ph-load는 absolute로 로딩화면 덮기 */
 .ph-load{position:absolute;inset:0;display:none;flex-direction:column;
-  align-items:center;justify-content:center;z-index:2;transition:opacity .4s;padding:24px}
+  align-items:center;justify-content:center;z-index:2;transition:opacity .4s;padding:24px;
+  background:transparent}
+
 .sp-wrap{position:relative;width:160px;height:160px;margin-bottom:28px;flex-shrink:0}
 .sp-img{position:absolute;inset:0;z-index:10;display:flex;align-items:center;justify-content:center}
 .sp-img img{width:120px;height:120px;object-fit:contain;
@@ -173,19 +177,32 @@ textarea.t-txt::placeholder{color:rgba(7,33,58,.25)}
 .pcard-bar{height:2px;width:50px;border-radius:2px;background:rgba(0,207,192,.08);overflow:hidden}
 .pcard-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--teal),var(--blue));transition:width .6s ease}
 
-/* 결과 */
-.ph-result{position:absolute;inset:0;display:flex;flex-direction:column;
-  opacity:0;pointer-events:none;transition:opacity .4s;
-  overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;
+/* ★ 핵심 수정: ph-result를 스크롤 가능한 일반 흐름으로 변경 */
+.ph-result{
+  position:absolute;
+  inset:0;
+  overflow-y:auto;
+  overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .4s;
   background:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(0,207,192,.11) 0%,transparent 60%),
     radial-gradient(ellipse 60% 50% at 80% 95%,rgba(49,130,255,.08) 0%,transparent 55%),
-    linear-gradient(165deg,#f2f6ff 0%,#eaf0ff 45%,#eef8f6 100%)}
+    linear-gradient(165deg,#f2f6ff 0%,#eaf0ff 45%,#eef8f6 100%);
+}
 .ph-result::-webkit-scrollbar{width:3px}
 .ph-result::-webkit-scrollbar-track{background:transparent}
 .ph-result::-webkit-scrollbar-thumb{background:rgba(0,207,192,.25);border-radius:3px}
 .ph-result.show{opacity:1;pointer-events:all}
 
-.res-mascot-zone{flex-shrink:0;display:flex;flex-direction:column;align-items:center;
+/* ★ 결과 내부 컨텐츠: flex column → 자연스러운 블록 흐름 */
+.ph-result-inner{
+  padding-bottom:40px;
+  min-height:100%;
+}
+
+.res-mascot-zone{display:flex;flex-direction:column;align-items:center;
   padding:24px 0 4px;position:relative}
 .res-mascot-glow{position:absolute;top:8px;left:50%;transform:translateX(-50%);
   width:170px;height:170px;border-radius:50%;pointer-events:none;
@@ -389,6 +406,7 @@ textarea.t-txt::placeholder{color:rgba(7,33,58,.25)}
 
     <!-- S2 -->
     <div class="screen hide-right" id="s2">
+      <!-- 로딩 패널 (absolute로 화면 덮음) -->
       <div class="ph-load" id="phLoad">
         <div class="sp-wrap">
           <div class="sp-ring2"></div><div class="sp-ring1"></div>
@@ -403,41 +421,45 @@ textarea.t-txt::placeholder{color:rgba(7,33,58,.25)}
           <div class="pcard" id="pc3"><div class="pcard-ico">✍️</div><div class="pcard-label">답변 생성 중</div><div class="pcard-bar"><div class="pcard-fill" id="pf3"></div></div></div>
         </div>
       </div>
+
+      <!-- ★ 결과 패널: absolute+inset:0 + overflow-y:auto → 자체 스크롤 -->
       <div class="ph-result" id="phResult">
-        <div class="res-mascot-zone">
-          <div class="res-mascot-glow"></div>
-          <img class="res-mascot-img" id="resMascot" src="https://raw.githubusercontent.com/jnlib/jnlib/main/mascot.png" alt="">
-        </div>
-        <div class="answer-wrap" id="answerWrap">
-          <div class="answer-head"></div>
-          <div class="answer-body" id="answerBody"></div>
-        </div>
-        <div class="deliver-wrap" id="deliverWrap">
-          <div class="deliver-card">
-            <div class="deliver-scan"></div>
-            <div class="dc-corner dc-tl"></div><div class="dc-corner dc-tr"></div>
-            <div class="dc-corner dc-bl"></div><div class="dc-corner dc-br"></div>
-            <div class="deliver-inner">
-              <div class="deliver-ico-wrap">
-                <div class="deliver-ico-bg"></div><div class="deliver-ico-ring"></div><div class="deliver-ico-ring2"></div>
-                <div class="deliver-ico-emoji">📨</div>
-              </div>
-              <div class="deliver-texts">
-                <div class="deliver-status-row">
-                  <div class="deliver-status-dot"></div>
-                  <div class="deliver-title">담당자에게 전달 완료</div>
-                </div>
-                <div class="deliver-sub">TRANSMISSION COMPLETE<span id="emailStatus">· 발송 중...</span></div>
-                <div class="deliver-progress"><div class="deliver-progress-fill" id="deliverFill"></div></div>
-                <div class="deliver-progress-label">
-                  <span class="deliver-prog-lbl">DATA TRANSFER</span>
-                  <span class="deliver-prog-pct" id="deliverPct">0%</span>
-                </div>
-              </div>
-              <div class="deliver-badge-wrap"><div class="deliver-badge">전달됨</div></div>
-            </div>
+        <div class="ph-result-inner">
+          <div class="res-mascot-zone">
+            <div class="res-mascot-glow"></div>
+            <img class="res-mascot-img" id="resMascot" src="https://raw.githubusercontent.com/jnlib/jnlib/main/mascot.png" alt="">
           </div>
-          <button class="again-btn" onclick="restart()">↩ 처음으로 돌아가기</button>
+          <div class="answer-wrap" id="answerWrap">
+            <div class="answer-head"></div>
+            <div class="answer-body" id="answerBody"></div>
+          </div>
+          <div class="deliver-wrap" id="deliverWrap">
+            <div class="deliver-card">
+              <div class="deliver-scan"></div>
+              <div class="dc-corner dc-tl"></div><div class="dc-corner dc-tr"></div>
+              <div class="dc-corner dc-bl"></div><div class="dc-corner dc-br"></div>
+              <div class="deliver-inner">
+                <div class="deliver-ico-wrap">
+                  <div class="deliver-ico-bg"></div><div class="deliver-ico-ring"></div><div class="deliver-ico-ring2"></div>
+                  <div class="deliver-ico-emoji">📨</div>
+                </div>
+                <div class="deliver-texts">
+                  <div class="deliver-status-row">
+                    <div class="deliver-status-dot"></div>
+                    <div class="deliver-title">담당자에게 전달 완료</div>
+                  </div>
+                  <div class="deliver-sub">TRANSMISSION COMPLETE<span id="emailStatus">· 발송 중...</span></div>
+                  <div class="deliver-progress"><div class="deliver-progress-fill" id="deliverFill"></div></div>
+                  <div class="deliver-progress-label">
+                    <span class="deliver-prog-lbl">DATA TRANSFER</span>
+                    <span class="deliver-prog-pct" id="deliverPct">0%</span>
+                  </div>
+                </div>
+                <div class="deliver-badge-wrap"><div class="deliver-badge">전달됨</div></div>
+              </div>
+            </div>
+            <button class="again-btn" onclick="restart()">↩ 처음으로 돌아가기</button>
+          </div>
         </div>
       </div>
     </div>
@@ -498,6 +520,7 @@ async function startAnalysis() {
   phLoad.style.opacity       = '1';
   phLoad.style.pointerEvents = 'all';
   phResult.classList.remove('show');
+  phResult.scrollTop = 0;  /* ★ 결과창 상단으로 리셋 */
 
   /* 카드 애니 + API 호출 병렬 실행 */
   const [, data] = await Promise.all([
@@ -729,7 +752,10 @@ function restart() {
   phLoad.style.opacity       = '1';
   phLoad.style.pointerEvents = 'all';
 
-  document.getElementById('phResult').classList.remove('show');
+  const phResult = document.getElementById('phResult');
+  phResult.classList.remove('show');
+  phResult.scrollTop = 0;
+
   document.getElementById('answerWrap').classList.remove('in');
   document.getElementById('resMascot').classList.remove('bounce', 'talking');
   document.getElementById('answerBody').innerHTML          = '';
