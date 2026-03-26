@@ -226,7 +226,7 @@ textarea.t-txt::placeholder{color:rgba(7,33,58,.25)}
 .ph-result{position:absolute;inset:0;display:flex;flex-direction:column;
   opacity:0;pointer-events:none;transition:opacity .5s;overflow-y:auto}
 .ph-result::-webkit-scrollbar{width:0}
-.ph-result.show{opacity:1;pointer-events:all}
+.ph-result.show{opacity:1 !important;pointer-events:all !important}
 
 /* 결과지 헤더 */
 .res-header{flex-shrink:0;padding:16px 18px 14px;
@@ -752,19 +752,24 @@ function renderResult(data){
 /* ── 메인 플로우 ── */
 async function done(){
   const content=document.getElementById('ta').value.trim();
-  document.getElementById('phLoad').style.opacity='1';
-  document.getElementById('phLoad').style.pointerEvents='all';
-  document.getElementById('phResult').classList.remove('show');
+  const phLoad=document.getElementById('phLoad');
+  const phResult=document.getElementById('phResult');
+
+  phLoad.style.display='flex';
+  phLoad.style.opacity='1';
+  phLoad.style.pointerEvents='all';
+  phResult.classList.remove('show');
 
   await animateCards();
   const data=await callWorker(content);
   sendEmail(content, data);
 
-  document.getElementById('phLoad').style.opacity='0';
-  document.getElementById('phLoad').style.pointerEvents='none';
+  phLoad.style.opacity='0';
+  phLoad.style.pointerEvents='none';
   await sleep(350);
+  phLoad.style.display='none';
 
-  document.getElementById('phResult').classList.add('show');
+  phResult.classList.add('show');
   renderResult(data);
 }
 
@@ -814,8 +819,10 @@ function restart(){
   document.getElementById('ta').value='';
   document.getElementById('taLen').textContent='0';
   document.getElementById('btnNext1').disabled=true;
-  document.getElementById('phLoad').style.opacity='1';
-  document.getElementById('phLoad').style.pointerEvents='all';
+  const phLoad=document.getElementById('phLoad');
+  phLoad.style.display='flex';
+  phLoad.style.opacity='1';
+  phLoad.style.pointerEvents='all';
   document.getElementById('phResult').classList.remove('show');
   document.getElementById('gistCard').style.opacity='0';
   document.getElementById('gistCard').style.transform='translateY(10px)';
