@@ -657,7 +657,13 @@ async function renderResult(data){
   const answerWrap = document.getElementById('answerWrap');
 
   // 디버그 토스트
-  if(data._debug) toast(data._debug);
+  if(data._debug){
+    const el=document.getElementById('toast');
+    el.textContent=data._debug;
+    el.classList.add('on');
+    // 디버그는 8초 유지
+    setTimeout(()=>el.classList.remove('on'), 8000);
+  }
   // B: 햅틱 피드백
   if(navigator.vibrate) navigator.vibrate([12, 60, 8]);
 
