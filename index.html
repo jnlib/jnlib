@@ -689,7 +689,7 @@ function buildSections(data) {
       out.push({
         cls:  'ans-rule-block',
         html: `<div class="ans-rule-intro">현재 우리 도서관에서는 「이용자 준수사항 위반행위별 조치기준」을 마련하여 운영하고 있습니다.</div>`
-             +`<div class="ans-act">귀하께서 언급하신 <strong>${gist}</strong>에 관한 사안은 이용자 준수사항 위반행위 중 '<strong>${actText}</strong>'에 해당되며, 「이용자 준수사항 위반행위별 조치기준」 ${s.no}번에 따라 다음과 같은 조치가 가능합니다.</div>`
+             +`<div class="ans-act">귀하께서 언급하신 사안은 이용자 준수사항 위반행위 중 '<strong>${actText}</strong>'에 해당되며, 「이용자 준수사항 위반행위별 조치기준」 ${s.no}번에 따라 다음과 같은 조치가 가능합니다.</div>`
              +(penaltyText ? `<div class="ans-penalty">(${penaltyText})</div>` : '')
       });
     }
