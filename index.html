@@ -9,7 +9,7 @@
 <style>
 :root {
   --navy:#07213a; --navy2:#0b2d50; --blue:#3182ff; --teal:#00cfc0; --teal2:#00a898;
-  --green:#00c47a; --text:#0a1e34; --text2:#1e3a58; --muted:#7a9ab8;
+  --green:#00c47a; --amber:#f5a000; --text:#0a1e34; --text2:#1e3a58; --muted:#7a9ab8;
   --bg:#f0f5ff; --white:#ffffff;
   --brd:rgba(0,207,192,.14);
   --shadow-sm:0 2px 12px rgba(7,33,58,.06);
@@ -20,7 +20,6 @@ html,body{height:100%;overflow:hidden}
 body{font-family:'Noto Sans KR',sans-serif;color:var(--text);background:var(--bg);
   display:flex;justify-content:center;align-items:center}
 
-/* ── 배경 ── */
 .bg-base{position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
     radial-gradient(ellipse 80% 60% at 15% 10%,rgba(49,130,255,.07) 0%,transparent 55%),
@@ -29,7 +28,6 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--text);background:var(--bg
 .bg-hex{position:fixed;inset:0;z-index:0;pointer-events:none}
 .bg-hex svg{width:100%;height:100%}
 
-/* ── 셸 ── */
 .shell{width:100%;max-width:430px;height:100%;height:100dvh;
   position:relative;z-index:1;display:flex;flex-direction:column;overflow:hidden;
   box-shadow:0 0 0 1px rgba(0,207,192,.1),0 0 80px rgba(7,33,58,.15)}
@@ -57,11 +55,9 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--text);background:var(--bg
 @keyframes dotPulse{0%,100%{box-shadow:0 0 0 0 rgba(0,207,192,.4)}
   50%{box-shadow:0 0 0 4px rgba(0,207,192,.12),0 0 8px rgba(0,207,192,.5)}}
 
-/* 진행바 */
 .prog{height:2px;background:rgba(0,207,192,.08);flex-shrink:0}
 .prog-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--teal),var(--blue));transition:width .5s ease}
 
-/* ── 스크린 ── */
 .screens{flex:1;position:relative;overflow:hidden;min-height:0}
 .screen{position:absolute;inset:0;display:flex;flex-direction:column;
   transition:transform .38s cubic-bezier(.4,0,.2,1),opacity .34s ease;overflow:hidden}
@@ -69,70 +65,48 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--text);background:var(--bg
 .screen.hide-right{transform:translateX(100%);opacity:0;pointer-events:none}
 .screen.show{transform:translateX(0);opacity:1;pointer-events:all}
 
-/* ════════════════════════════
-   S0 인트로 — 깔끔하게
-════════════════════════════ */
+/* ════ S0 인트로 ════ */
 #s0{align-items:center;justify-content:center;background:transparent;overflow:hidden}
-
-/* 배경 글로우 딱 하나 */
 .aurora{position:absolute;inset:0;pointer-events:none;
   background:radial-gradient(ellipse 55% 40% at 50% 38%,rgba(0,207,192,.14) 0%,transparent 65%);
   animation:breath 5s ease-in-out infinite}
 @keyframes breath{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.04)}}
-
 .intro-wrap{position:relative;z-index:2;
   display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 28px}
-
-/* 마스코트 — 이미지 흰 배경 그대로, 링 없음 */
 .m-zone{position:relative;width:156px;height:156px;
   display:flex;align-items:center;justify-content:center;
   margin-bottom:28px;animation:fadeUp .8s .05s both}
-
-/* 부드러운 글로우 (그냥 배경 빛) */
 .m-glow{position:absolute;inset:-20px;border-radius:50%;
   background:radial-gradient(ellipse 65% 65% at 50% 50%,rgba(0,207,192,.16),transparent 68%);
   animation:breath 4s ease-in-out infinite;filter:blur(6px)}
-
-/* 이미지 카드 — 흰색 순수 배경 */
 .m-card{position:relative;z-index:2;width:148px;height:148px;border-radius:30px;
-  background:#fff;
-  display:flex;align-items:center;justify-content:center;overflow:hidden;
+  background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;
   box-shadow:0 0 0 1px rgba(0,207,192,.2),0 8px 32px rgba(7,33,58,.12),0 0 20px rgba(0,207,192,.1);
   animation:floatY 4s ease-in-out infinite}
 .m-card img{width:86%;height:86%;object-fit:contain}
 @keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-
-/* 스캔빔 */
 .m-scan{position:absolute;inset:0;border-radius:30px;overflow:hidden;z-index:3;pointer-events:none}
 .m-beam{position:absolute;left:0;right:0;height:2px;
   background:linear-gradient(90deg,transparent,rgba(0,207,192,.2) 25%,rgba(255,255,255,.85) 50%,rgba(0,207,192,.2) 75%,transparent);
   box-shadow:0 0 8px rgba(0,207,192,.35);
   animation:beamScan 3.2s ease-in-out infinite;opacity:0}
 @keyframes beamScan{0%{top:0;opacity:0}5%{opacity:1}95%{opacity:1}100%{top:100%;opacity:0}}
-
-/* HUD 핀 — 미니멀하게 */
 .m-pin{position:absolute;z-index:4}
 .m-tl{top:4px;left:4px;width:13px;height:13px;border-top:1.5px solid rgba(0,207,192,.65);border-left:1.5px solid rgba(0,207,192,.65);border-radius:30px 0 0 0}
 .m-tr{top:4px;right:4px;width:13px;height:13px;border-top:1.5px solid rgba(0,207,192,.65);border-right:1.5px solid rgba(0,207,192,.65);border-radius:0 30px 0 0}
 .m-bl{bottom:4px;left:4px;width:13px;height:13px;border-bottom:1.5px solid rgba(49,130,255,.55);border-left:1.5px solid rgba(49,130,255,.55);border-radius:0 0 0 30px}
 .m-br{bottom:4px;right:4px;width:13px;height:13px;border-bottom:1.5px solid rgba(49,130,255,.55);border-right:1.5px solid rgba(49,130,255,.55);border-radius:0 0 30px 0}
-
-/* 뱃지 */
 .i-badge{display:inline-flex;align-items:center;gap:6px;
   background:rgba(0,207,192,.07);border:1px solid rgba(0,207,192,.22);
   border-radius:6px;padding:5px 12px;
   font-size:.65em;font-weight:700;font-family:'Share Tech Mono',monospace;
   color:var(--teal2);margin-bottom:13px;letter-spacing:.08em;animation:fadeUp .7s .18s both}
 .i-bdot{width:5px;height:5px;border-radius:50%;background:var(--teal);animation:dotPulse 1.6s infinite}
-
 .i-title{font-size:clamp(1.78em,5.5vw,2.4em);font-weight:900;color:var(--navy);
   line-height:1.2;letter-spacing:-.02em;margin-bottom:10px;animation:fadeUp .7s .28s both}
 .i-title span{background:linear-gradient(130deg,var(--teal2),var(--blue));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-
 .i-sub{font-size:.95em;color:var(--text2);line-height:1.85;margin-bottom:30px;animation:fadeUp .7s .38s both}
-
-/* 버튼 — 크고 3D */
 .i-btn{position:relative;overflow:hidden;
   width:100%;max-width:286px;padding:19px 28px;
   border:none;border-radius:15px;cursor:pointer;
@@ -142,11 +116,8 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--text);background:var(--bg
   border-left:1px solid rgba(0,207,192,.22);
   border-right:1px solid rgba(0,207,192,.1);
   border-bottom:1px solid rgba(0,0,0,.18);
-  box-shadow:
-    0 2px 0 rgba(0,207,192,.18),
-    0 8px 0 rgba(5,22,45,.42),
-    0 12px 28px rgba(7,33,58,.28),
-    0 0 26px rgba(0,207,192,.13),
+  box-shadow:0 2px 0 rgba(0,207,192,.18),0 8px 0 rgba(5,22,45,.42),
+    0 12px 28px rgba(7,33,58,.28),0 0 26px rgba(0,207,192,.13),
     inset 0 1px 0 rgba(255,255,255,.13);
   transition:transform .1s,box-shadow .1s;
   display:flex;align-items:center;justify-content:center;gap:12px;
@@ -154,33 +125,25 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--text);background:var(--bg
 .i-btn:active{transform:translateY(6px);
   box-shadow:0 1px 0 rgba(0,207,192,.12),0 2px 0 rgba(5,22,45,.38),
     0 5px 12px rgba(7,33,58,.24),inset 0 1px 0 rgba(255,255,255,.07)}
-/* 좌→우 광택 스윕 */
 .i-sweep{position:absolute;top:0;left:-70%;width:48%;height:100%;
   background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);
   transform:skewX(-14deg);animation:ltrSweep 2.8s ease-in-out infinite}
 @keyframes ltrSweep{0%{left:-70%}100%{left:150%}}
-
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 
-/* ════════════════════════════
-   S1 입력
-════════════════════════════ */
+/* ════ S1 입력 ════ */
 #s1{background:transparent;overflow-y:auto}
 #s1::-webkit-scrollbar{width:0}
 .s1-inner{padding:22px 18px 100px}
-
 .step-tag{display:inline-flex;align-items:center;gap:6px;
   background:rgba(0,207,192,.06);border:1px solid rgba(0,207,192,.18);
   border-radius:6px;padding:4px 11px;
   font-size:.65em;font-weight:700;font-family:'Share Tech Mono',monospace;
   color:var(--teal2);margin-bottom:10px;letter-spacing:.07em}
 .stag-dot{width:4px;height:4px;border-radius:50%;background:var(--teal);animation:dotPulse 1.6s infinite}
-
 .step-title{font-size:1.42em;font-weight:900;color:var(--navy);
   letter-spacing:-.02em;line-height:1.25;margin-bottom:18px}
 .step-title span{color:var(--teal2)}
-
-/* 터미널 */
 .terminal{position:relative;overflow:hidden;border-radius:15px;
   background:var(--white);border:1px solid rgba(0,207,192,.18);
   box-shadow:var(--shadow-md),0 0 0 1px rgba(255,255,255,.8)}
@@ -196,7 +159,6 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--text);background:var(--bg
 .t-ttl{font-size:.63em;font-family:'Share Tech Mono',monospace;color:var(--muted);flex:1;text-align:center;letter-spacing:.08em}
 .t-cnt{font-size:.62em;font-family:'Share Tech Mono',monospace;color:var(--muted)}
 .t-cnt span{color:var(--teal2);font-weight:700}
-/* 스캔빔 */
 .t-scan{position:absolute;left:0;right:0;height:1.5px;
   background:linear-gradient(90deg,transparent,rgba(0,207,192,.35),transparent);
   animation:tScan 5s ease-in-out infinite;opacity:0;z-index:2;top:46px}
@@ -211,7 +173,6 @@ textarea.t-txt{flex:1;background:transparent;border:none;outline:none;resize:non
 textarea.t-txt::placeholder{color:rgba(7,33,58,.25)}
 .t-foot{display:flex;padding:7px 15px;border-top:1px solid rgba(0,207,192,.08);background:rgba(0,207,192,.02)}
 .t-foot-tag{font-size:.57em;font-family:'Share Tech Mono',monospace;color:rgba(106,138,170,.45)}
-
 .ai-hint{margin-top:13px;display:flex;align-items:flex-start;gap:10px;
   background:rgba(0,207,192,.04);border:1px solid rgba(0,207,192,.12);
   border-radius:12px;padding:12px 14px}
@@ -219,42 +180,28 @@ textarea.t-txt::placeholder{color:rgba(7,33,58,.25)}
 .ai-hint-txt{font-size:.81em;color:var(--muted);line-height:1.72}
 .ai-hint-txt strong{color:var(--teal2);font-weight:700}
 
-/* ════════════════════════════
-   S2 분석+완료
-════════════════════════════ */
+/* ════ S2 분석+완료 ════ */
 #s2{background:transparent}
 .ph-load{position:absolute;inset:0;display:flex;flex-direction:column;
   align-items:center;justify-content:center;z-index:2;transition:opacity .4s;padding:24px}
-
-/* 스피너 — 이미지 절대 안 돌아감, 링만 회전 */
 .sp-wrap{position:relative;width:100px;height:100px;margin-bottom:24px}
-/* 이미지: z-index 높여서 최상단, 회전 없음 */
-.sp-img{position:absolute;inset:0;z-index:10;
-  display:flex;align-items:center;justify-content:center}
-.sp-img-box{width:64px;height:64px;border-radius:50%;
-  background:#fff;border:1px solid rgba(0,207,192,.15);
-  display:flex;align-items:center;justify-content:center;
+.sp-img{position:absolute;inset:0;z-index:10;display:flex;align-items:center;justify-content:center}
+.sp-img-box{width:64px;height:64px;border-radius:50%;background:#fff;
+  border:1px solid rgba(0,207,192,.15);display:flex;align-items:center;justify-content:center;
   box-shadow:0 2px 10px rgba(7,33,58,.09);overflow:hidden}
 .sp-img-box img{width:76%;height:76%;object-fit:contain}
-/* 링 1 */
-.sp-ring1{position:absolute;inset:0;border-radius:50%;
-  border:2px solid transparent;
+.sp-ring1{position:absolute;inset:0;border-radius:50%;border:2px solid transparent;
   background:linear-gradient(#fff,#fff) padding-box,
     conic-gradient(from 0deg,rgba(0,207,192,.08),rgba(0,207,192,1) 45%,rgba(49,130,255,1) 75%,rgba(0,207,192,.08)) border-box;
   animation:spinA 1.8s linear infinite}
-/* 링 2 */
-.sp-ring2{position:absolute;inset:-10px;border-radius:50%;
-  border:1px solid transparent;
+.sp-ring2{position:absolute;inset:-10px;border-radius:50%;border:1px solid transparent;
   background:linear-gradient(#fff,#fff) padding-box,
     conic-gradient(from 180deg,rgba(49,130,255,.05),rgba(49,130,255,.5) 40%,rgba(0,207,192,.5) 70%,rgba(49,130,255,.05)) border-box;
   animation:spinA 3.5s linear infinite reverse}
 @keyframes spinA{to{transform:rotate(360deg)}}
-
 .sp-title{font-size:1.14em;font-weight:900;color:var(--navy);margin-bottom:4px;text-align:center}
 .sp-sub{font-size:.71em;color:var(--muted);margin-bottom:22px;
   font-family:'Share Tech Mono',monospace;letter-spacing:.1em;text-align:center}
-
-/* 진행 카드 */
 .prog-cards{width:100%;max-width:310px;display:flex;flex-direction:column;gap:8px}
 .pcard{display:flex;align-items:center;gap:11px;
   background:rgba(255,255,255,.75);border:1px solid rgba(0,207,192,.1);
@@ -262,9 +209,9 @@ textarea.t-txt::placeholder{color:rgba(7,33,58,.25)}
 .pcard.on{opacity:1;border-color:rgba(0,207,192,.3);background:rgba(255,255,255,.95);
   box-shadow:0 0 0 1px rgba(0,207,192,.1),0 4px 14px rgba(0,207,192,.08)}
 .pcard.done{opacity:.48}
-.pcard-ico{width:30px;height:30px;border-radius:8px;
-  background:rgba(0,207,192,.07);border:1px solid rgba(0,207,192,.12);
-  display:flex;align-items:center;justify-content:center;font-size:.88em;flex-shrink:0}
+.pcard-ico{width:30px;height:30px;border-radius:8px;background:rgba(0,207,192,.07);
+  border:1px solid rgba(0,207,192,.12);display:flex;align-items:center;justify-content:center;
+  font-size:.88em;flex-shrink:0}
 .pcard.on .pcard-ico{background:rgba(0,207,192,.14);box-shadow:0 0 10px rgba(0,207,192,.18);
   animation:cardPop .9s ease-in-out infinite}
 @keyframes cardPop{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
@@ -273,91 +220,175 @@ textarea.t-txt::placeholder{color:rgba(7,33,58,.25)}
 .pcard-bar{height:2px;width:50px;border-radius:2px;background:rgba(0,207,192,.08);overflow:hidden}
 .pcard-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--teal),var(--blue));transition:width .6s ease}
 
-/* 결과 화면 */
+/* ════════════════════════════
+   결과지 — 완전 리디자인
+════════════════════════════ */
 .ph-result{position:absolute;inset:0;display:flex;flex-direction:column;
   opacity:0;pointer-events:none;transition:opacity .5s;overflow-y:auto}
 .ph-result::-webkit-scrollbar{width:0}
-.res-top{flex-shrink:0;padding:20px 18px 16px;
-  background:rgba(255,255,255,.82);backdrop-filter:blur(16px);
-  border-bottom:1px solid rgba(0,207,192,.1)}
-.res-av-row{display:flex;align-items:center;gap:11px;margin-bottom:14px}
-.res-av{width:38px;height:38px;border-radius:11px;overflow:hidden;flex-shrink:0;
-  background:#fff;
-  box-shadow:0 2px 8px rgba(7,33,58,.1),0 0 0 1px rgba(0,207,192,.2);
+.ph-result.show{opacity:1;pointer-events:all}
+
+/* 결과지 헤더 */
+.res-header{flex-shrink:0;padding:16px 18px 14px;
+  background:rgba(255,255,255,.88);backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(0,207,192,.1);position:relative}
+.res-header::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--teal),var(--blue) 60%,var(--teal));
+  background-size:200% 100%;animation:flowLine 3s linear infinite}
+.res-av-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.res-av{width:36px;height:36px;border-radius:10px;overflow:hidden;flex-shrink:0;
+  background:#fff;box-shadow:0 2px 8px rgba(7,33,58,.1),0 0 0 1px rgba(0,207,192,.2);
   display:flex;align-items:center;justify-content:center}
 .res-av img{width:100%;height:100%;object-fit:contain}
-.res-av-name{font-size:.87em;font-weight:700;color:var(--navy)}
-.res-av-sub{font-size:.62em;color:var(--teal2);font-family:'Share Tech Mono',monospace;margin-top:2px;letter-spacing:.05em}
+.res-av-name{font-size:.86em;font-weight:700;color:var(--navy)}
+.res-av-sub{font-size:.6em;color:var(--teal2);font-family:'Share Tech Mono',monospace;margin-top:2px;letter-spacing:.05em}
+.res-id-row{display:flex;align-items:center;gap:7px;margin-bottom:0}
+.res-id-label{font-size:.6em;font-family:'Share Tech Mono',monospace;color:var(--muted);letter-spacing:.08em}
+.res-id-val{font-size:.6em;font-family:'Share Tech Mono',monospace;color:var(--teal2);
+  font-weight:700;letter-spacing:.06em}
+.res-id-sep{width:1px;height:10px;background:rgba(0,207,192,.2)}
+.res-status-dot{width:5px;height:5px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 6px var(--green);animation:dotPulse 1.6s infinite;flex-shrink:0}
 
-/* 말풍선 */
-.ai-bubble{
-  background:rgba(255,255,255,.92);
-  border:1px solid rgba(0,207,192,.18);border-radius:4px 16px 16px 16px;
-  padding:16px 17px;position:relative;
-  box-shadow:0 4px 18px rgba(7,33,58,.06),inset 0 1px 0 rgba(0,207,192,.07)}
-.ai-bubble::before{content:'';position:absolute;top:-1px;left:-7px;
-  border:7px solid transparent;border-right-color:rgba(0,207,192,.18);border-top-color:rgba(0,207,192,.18)}
-.ai-bubble::after{content:'';position:absolute;top:1px;left:-5px;
-  border:6px solid transparent;
-  border-right-color:rgba(255,255,255,.92);border-top-color:rgba(255,255,255,.92)}
+/* 민원요지 카드 */
+.gist-card{margin:0 18px 0;padding:14px 16px;
+  background:linear-gradient(135deg,rgba(7,33,58,.96) 0%,rgba(11,45,80,.94) 60%,rgba(0,110,102,.9) 100%);
+  border-radius:14px;position:relative;overflow:hidden;
+  box-shadow:0 4px 20px rgba(7,33,58,.18),0 0 0 1px rgba(0,207,192,.15),
+    inset 0 1px 0 rgba(255,255,255,.08)}
+.gist-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(0,207,192,.6),rgba(49,130,255,.4),transparent)}
+.gist-card::after{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 100% 0%,rgba(0,207,192,.08),transparent 55%);
+  pointer-events:none}
+.gist-label{font-size:.58em;font-family:'Share Tech Mono',monospace;font-weight:700;
+  color:rgba(0,207,192,.7);letter-spacing:.12em;margin-bottom:7px;
+  display:flex;align-items:center;gap:6px}
+.gist-label::before{content:'';display:inline-block;width:16px;height:1px;background:rgba(0,207,192,.5)}
+.gist-label::after{content:'';display:inline-block;width:16px;height:1px;background:rgba(0,207,192,.5)}
+.gist-text{font-size:.97em;font-weight:700;color:#fff;line-height:1.65;
+  letter-spacing:-.01em;position:relative;z-index:1}
+.gist-text em{font-style:normal;color:var(--teal);font-weight:900}
 
-/* ── 답변 텍스트 강조 스타일 ── */
-.ai-msg{font-size:.94em;color:var(--text);line-height:1.92}
+/* 결과 바디 스크롤 영역 */
+.res-body{flex:1;padding:14px 18px 24px;display:flex;flex-direction:column;gap:12px}
 
-/* 첫 문장 — 민원 요지 */
-.msg-gist{
-  display:block;margin-bottom:12px;
-  font-weight:900;font-size:1.02em;
-  color:var(--navy2);letter-spacing:-.01em;line-height:1.55}
+/* ── 섹션 카드 공통 ── */
+.sec-card{border-radius:14px;overflow:hidden;
+  background:rgba(255,255,255,.9);
+  border:1px solid rgba(0,207,192,.12);
+  box-shadow:var(--shadow-sm),0 0 0 1px rgba(255,255,255,.7);
+  opacity:0;transform:translateY(14px);
+  transition:opacity .45s,transform .45s}
+.sec-card.in{opacity:1;transform:translateY(0)}
 
-/* 규정/조치기준 내용 */
-.msg-rule{
-  display:block;margin:8px 0;
-  color:var(--teal2);font-weight:700;font-size:.91em;line-height:1.75;
-  padding:9px 12px;
-  background:rgba(0,207,192,.06);
-  border-left:3px solid var(--teal);
-  border-radius:0 9px 9px 0}
+/* 카드 헤더 */
+.sc-head{display:flex;align-items:center;gap:10px;padding:11px 14px;
+  border-bottom:1px solid rgba(0,207,192,.08)}
+.sc-ico{width:32px;height:32px;border-radius:9px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:.95em}
+.sc-ico.sanction{background:linear-gradient(135deg,rgba(241,90,90,.12),rgba(241,90,90,.06));
+  border:1px solid rgba(241,90,90,.18)}
+.sc-ico.topic{background:linear-gradient(135deg,rgba(0,207,192,.14),rgba(0,207,192,.06));
+  border:1px solid rgba(0,207,192,.2)}
+.sc-head-info{flex:1}
+.sc-type-badge{display:inline-flex;align-items:center;gap:4px;
+  border-radius:5px;padding:2px 7px;margin-bottom:3px;
+  font-size:.57em;font-weight:700;font-family:'Share Tech Mono',monospace;letter-spacing:.08em}
+.sc-type-badge.sanction{background:rgba(241,90,90,.08);border:1px solid rgba(241,90,90,.18);color:#d64040}
+.sc-type-badge.topic{background:rgba(0,207,192,.07);border:1px solid rgba(0,207,192,.2);color:var(--teal2)}
+.sc-type-dot{width:4px;height:4px;border-radius:50%}
+.sc-type-badge.sanction .sc-type-dot{background:#d64040}
+.sc-type-badge.topic .sc-type-dot{background:var(--teal)}
+.sc-title{font-size:.88em;font-weight:700;color:var(--navy);line-height:1.3}
+.sc-no{font-size:.6em;font-family:'Share Tech Mono',monospace;color:var(--muted);margin-left:auto;
+  background:rgba(0,207,192,.05);border:1px solid rgba(0,207,192,.1);
+  border-radius:5px;padding:2px 7px;flex-shrink:0}
 
-/* 일반 문장 */
-.msg-body{display:block;margin-bottom:4px;color:var(--text)}
+/* 카드 바디 */
+.sc-body{padding:13px 14px;display:flex;flex-direction:column;gap:10px}
 
-/* CLOSING */
-.msg-closing{display:block;margin-top:10px;color:var(--muted);font-size:.94em;line-height:1.92}
+/* 행위 설명 */
+.sc-act{font-size:.84em;color:var(--text2);line-height:1.75;
+  padding:10px 12px;
+  background:rgba(7,33,58,.03);border-radius:8px;
+  border-left:2.5px solid rgba(0,207,192,.35)}
 
-.t-cursor{display:inline-block;width:1.5px;height:.85em;
-  background:var(--teal2);margin-left:2px;vertical-align:middle;animation:blink .7s step-end infinite}
+/* 조치기준 테이블 */
+.penalty-wrap{display:flex;flex-direction:column;gap:0;border-radius:9px;overflow:hidden;
+  border:1px solid rgba(0,207,192,.12)}
+.penalty-head{display:grid;grid-template-columns:56px 1fr;
+  background:linear-gradient(90deg,rgba(7,33,58,.05),rgba(0,207,192,.04));
+  border-bottom:1px solid rgba(0,207,192,.1)}
+.penalty-head span{font-size:.58em;font-family:'Share Tech Mono',monospace;
+  color:var(--muted);letter-spacing:.1em;padding:6px 10px;font-weight:700}
+.penalty-row{display:grid;grid-template-columns:56px 1fr;border-bottom:1px solid rgba(0,207,192,.07)}
+.penalty-row:last-child{border-bottom:none}
+.p-nth{font-size:.75em;font-weight:700;font-family:'Share Tech Mono',monospace;
+  padding:8px 10px;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,207,192,.04);border-right:1px solid rgba(0,207,192,.08);
+  color:var(--teal2)}
+.p-val{font-size:.8em;font-weight:700;padding:8px 11px;display:flex;align-items:center;color:var(--text2)}
+/* 차수별 색상 */
+.penalty-row:nth-child(2) .p-nth{color:var(--teal2)}
+.penalty-row:nth-child(3) .p-nth{color:var(--amber)}
+.penalty-row:nth-child(4) .p-nth{color:#e07030}
+.penalty-row:nth-child(5) .p-nth{color:#d64040}
+.penalty-row:nth-child(2) .p-val{color:var(--text2)}
+.penalty-row:nth-child(3) .p-val{color:#8b6000}
+.penalty-row:nth-child(4) .p-val{color:#a04000}
+.penalty-row:nth-child(5) .p-val{color:#a03030}
 
-/* 결과 하단 */
-.res-bot{padding:16px 18px 28px;display:flex;flex-direction:column;gap:11px}
-.send-row{display:flex;align-items:center;gap:9px}
-.send-lbl{font-size:.64em;color:var(--muted);white-space:nowrap;font-family:'Share Tech Mono',monospace;letter-spacing:.07em}
-.send-bar{flex:1;height:2px;border-radius:2px;background:rgba(0,207,192,.08);overflow:hidden}
-.send-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--teal),var(--blue));transition:width 1.2s cubic-bezier(.4,0,.2,1)}
-.send-dot{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal);animation:dotPulse 1.5s infinite}
+/* 토픽 안내 */
+.sc-topic-content{font-size:.84em;color:var(--text2);line-height:1.8}
 
-.del-card{background:rgba(0,196,122,.05);border:1px solid rgba(0,196,122,.2);
-  border-radius:13px;padding:13px 15px;display:flex;align-items:center;gap:12px;
-  position:relative;overflow:hidden}
-.del-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(0,196,122,.5),transparent)}
-.del-ico-wrap{position:relative;flex-shrink:0}
-.del-ico{width:38px;height:38px;border-radius:10px;
+/* 기본값 카드 */
+.default-card{border-radius:14px;padding:18px 16px;
+  background:rgba(255,255,255,.85);border:1px solid rgba(0,207,192,.12);
+  box-shadow:var(--shadow-sm);text-align:center;
+  opacity:0;transform:translateY(14px);transition:opacity .45s,transform .45s}
+.default-card.in{opacity:1;transform:translateY(0)}
+.default-card-ico{font-size:2em;margin-bottom:10px}
+.default-card-title{font-size:.95em;font-weight:700;color:var(--navy);margin-bottom:6px}
+.default-card-sub{font-size:.82em;color:var(--muted);line-height:1.7}
+
+/* 전달 완료 카드 */
+.deliver-card{border-radius:14px;overflow:hidden;
+  background:rgba(255,255,255,.88);border:1px solid rgba(0,196,122,.2);
+  box-shadow:var(--shadow-sm),0 0 16px rgba(0,196,122,.06);
+  opacity:0;transform:translateY(14px);transition:opacity .5s .2s,transform .5s .2s}
+.deliver-card.in{opacity:1;transform:translateY(0)}
+.deliver-top{display:flex;align-items:center;gap:12px;padding:13px 15px;
+  border-bottom:1px solid rgba(0,196,122,.1)}
+.deliver-ico-wrap{position:relative;flex-shrink:0;width:38px;height:38px}
+.deliver-ico{width:38px;height:38px;border-radius:10px;
   background:rgba(0,196,122,.1);display:flex;align-items:center;justify-content:center;font-size:1.1em}
-.del-ring{position:absolute;border-radius:50%;border:1.5px solid rgba(0,196,122,.3);
+.deliver-ring{position:absolute;border-radius:50%;border:1.5px solid rgba(0,196,122,.3);
   pointer-events:none;animation:delRing 1.8s ease-out forwards}
-.del-ring:nth-child(2){animation-delay:.35s}.del-ring:nth-child(3){animation-delay:.7s}
+.deliver-ring:nth-child(2){animation-delay:.35s}
+.deliver-ring:nth-child(3){animation-delay:.7s}
 @keyframes delRing{from{width:38px;height:38px;top:0;left:0;opacity:.8}to{width:68px;height:68px;top:-15px;left:-15px;opacity:0}}
-.del-info{flex:1}
-.del-title{font-size:.88em;font-weight:700;color:var(--green);margin-bottom:2px}
-.del-sub{font-size:.72em;color:var(--muted)}
-.del-badge{background:rgba(0,196,122,.08);border:1px solid rgba(0,196,122,.2);
+.deliver-info{flex:1}
+.deliver-title{font-size:.88em;font-weight:700;color:var(--green);margin-bottom:2px}
+.deliver-sub{font-size:.72em;color:var(--muted)}
+.deliver-badge{background:rgba(0,196,122,.08);border:1px solid rgba(0,196,122,.2);
   border-radius:6px;padding:3px 9px;font-size:.67em;font-weight:700;
-  font-family:'Share Tech Mono',monospace;color:var(--green)}
+  font-family:'Share Tech Mono',monospace;color:var(--green);white-space:nowrap}
 
+/* 전달 진행바 */
+.deliver-bar-wrap{padding:10px 15px 12px;
+  background:rgba(0,196,122,.02)}
+.deliver-bar-row{display:flex;align-items:center;gap:8px}
+.deliver-bar-lbl{font-size:.6em;font-family:'Share Tech Mono',monospace;color:var(--muted);white-space:nowrap;letter-spacing:.07em}
+.deliver-bar{flex:1;height:3px;border-radius:3px;background:rgba(0,207,192,.1);overflow:hidden}
+.deliver-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--teal),var(--green));transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+.deliver-status{font-size:.68em;color:var(--muted);margin-top:5px;text-align:right;
+  font-family:'Share Tech Mono',monospace;letter-spacing:.04em}
+
+/* 다시하기 */
 .again-btn{font-size:.86em;color:var(--muted);background:none;border:none;cursor:pointer;
-  font-family:'Noto Sans KR',sans-serif;text-align:center;padding:6px;
-  display:flex;align-items:center;justify-content:center;gap:5px;transition:color .2s}
+  font-family:'Noto Sans KR',sans-serif;text-align:center;padding:8px;
+  display:flex;align-items:center;justify-content:center;gap:5px;transition:color .2s;width:100%}
 .again-btn:hover{color:var(--teal2)}
 
 /* ── 바텀바 ── */
@@ -385,18 +416,15 @@ textarea.t-txt::placeholder{color:rgba(7,33,58,.25)}
 .btn-next:active{transform:scale(.97)}
 .btn-next:disabled{opacity:.28;cursor:not-allowed;box-shadow:none;transform:none}
 
-/* 토스트 */
 .toast{position:fixed;bottom:84px;left:50%;transform:translateX(-50%) translateY(12px);
   background:rgba(7,33,58,.88);color:#fff;padding:10px 20px;border-radius:10px;
   font-size:.87em;pointer-events:none;opacity:0;transition:all .26s;z-index:9000;
   white-space:nowrap;border:1px solid rgba(0,207,192,.2);backdrop-filter:blur(12px)}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
-
 #cvs{position:fixed;inset:0;pointer-events:none;z-index:9999}
 </style>
 </head>
 <body>
-
 <div class="bg-base"></div>
 <div class="bg-hex">
   <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
@@ -412,17 +440,15 @@ textarea.t-txt::placeholder{color:rgba(7,33,58,.25)}
     <rect width="100%" height="100%" fill="url(#hp2)"/>
   </svg>
 </div>
-
 <canvas id="cvs"></canvas>
 <div class="toast" id="toast"></div>
 
 <div class="shell">
-
   <div class="hdr">
     <div class="hav"><img src="https://raw.githubusercontent.com/jnlib/jnlib/main/mascot.png" alt=""></div>
     <div>
       <div class="hname">JONGNO LIBRARY</div>
-      <div class="horg">COMPLAINT AI SYSTEM · v3.2</div>
+      <div class="horg">COMPLAINT AI SYSTEM · v4.0</div>
     </div>
     <div class="h-online"><span class="h-dot"></span>ONLINE</div>
   </div>
@@ -440,16 +466,12 @@ textarea.t-txt::placeholder{color:rgba(7,33,58,.25)}
             <img src="https://raw.githubusercontent.com/jnlib/jnlib/main/mascot.png" alt="AI 도우미">
             <div class="m-scan"><div class="m-beam"></div></div>
           </div>
-          <div class="m-pin m-tl"></div>
-          <div class="m-pin m-tr"></div>
-          <div class="m-pin m-bl"></div>
-          <div class="m-pin m-br"></div>
+          <div class="m-pin m-tl"></div><div class="m-pin m-tr"></div>
+          <div class="m-pin m-bl"></div><div class="m-pin m-br"></div>
         </div>
-
         <div class="i-badge"><span class="i-bdot"></span>AI SYSTEM ONLINE</div>
         <div class="i-title">종로도서관<br><span>AI 민원 도우미</span></div>
         <div class="i-sub">불편하셨나요? AI가 내용을 분석하고<br>담당자에게 즉시 전달해 드립니다.</div>
-
         <button class="i-btn" onclick="go(1)">
           <div class="i-sweep"></div>
           <span style="font-size:1.18em">📋</span>
@@ -475,7 +497,7 @@ textarea.t-txt::placeholder{color:rgba(7,33,58,.25)}
             <textarea class="t-txt" id="ta" maxlength="400" oninput="onTa(this)"
               placeholder="예) 자율학습실에서 옆 이용자가 큰 소리로 통화를 해서 집중이 어렵습니다.&#10;&#10;시설, 소음, 온도, 냄새, 좌석 문제 등 어떤 내용이든 자유롭게 작성해 주세요."></textarea>
           </div>
-          <div class="t-foot"><span class="t-foot-tag">민원접수시스템 v3.2 · UTF-8</span></div>
+          <div class="t-foot"><span class="t-foot-tag">민원접수시스템 v4.0 · UTF-8</span></div>
         </div>
         <div class="ai-hint">
           <div class="ai-hint-ico">🤖</div>
@@ -494,15 +516,12 @@ textarea.t-txt::placeholder{color:rgba(7,33,58,.25)}
 
     <!-- S2 분석+완료 -->
     <div class="screen hide-right" id="s2">
+      <!-- 로딩 -->
       <div class="ph-load" id="phLoad">
         <div class="sp-wrap">
           <div class="sp-ring2"></div>
           <div class="sp-ring1"></div>
-          <div class="sp-img">
-            <div class="sp-img-box">
-              <img src="https://raw.githubusercontent.com/jnlib/jnlib/main/mascot.png" alt="">
-            </div>
-          </div>
+          <div class="sp-img"><div class="sp-img-box"><img src="https://raw.githubusercontent.com/jnlib/jnlib/main/mascot.png" alt=""></div></div>
         </div>
         <div class="sp-title">AI가 분석 중이에요</div>
         <div class="sp-sub">ANALYZING YOUR COMPLAINT...</div>
@@ -510,47 +529,44 @@ textarea.t-txt::placeholder{color:rgba(7,33,58,.25)}
           <div class="pcard" id="pc0"><div class="pcard-ico">🔍</div><div class="pcard-label">민원 내용 파악</div><div class="pcard-bar"><div class="pcard-fill" id="pf0"></div></div></div>
           <div class="pcard" id="pc1"><div class="pcard-ico">📋</div><div class="pcard-label">이용규정 검토</div><div class="pcard-bar"><div class="pcard-fill" id="pf1"></div></div></div>
           <div class="pcard" id="pc2"><div class="pcard-ico">⚖️</div><div class="pcard-label">조치기준 확인</div><div class="pcard-bar"><div class="pcard-fill" id="pf2"></div></div></div>
-          <div class="pcard" id="pc3"><div class="pcard-ico">✍️</div><div class="pcard-label">답변 작성 중</div><div class="pcard-bar"><div class="pcard-fill" id="pf3"></div></div></div>
+          <div class="pcard" id="pc3"><div class="pcard-ico">✍️</div><div class="pcard-label">답변 생성 중</div><div class="pcard-bar"><div class="pcard-fill" id="pf3"></div></div></div>
         </div>
       </div>
 
+      <!-- 결과지 -->
       <div class="ph-result" id="phResult">
-        <div class="res-top">
+
+        <!-- 결과 헤더 -->
+        <div class="res-header">
           <div class="res-av-row">
             <div class="res-av"><img src="https://raw.githubusercontent.com/jnlib/jnlib/main/mascot.png" alt=""></div>
             <div>
               <div class="res-av-name">종로도서관 AI 도우미</div>
-              <div class="res-av-sub">ANALYSIS COMPLETE · TRANSMITTED</div>
+              <div class="res-av-sub">ANALYSIS COMPLETE</div>
             </div>
           </div>
-          <div class="ai-bubble" id="aiBubble"
-            style="opacity:0;transform:translateY(10px);transition:opacity .45s,transform .45s">
-            <div class="ai-msg" id="aiMsg"></div>
-          </div>
-        </div>
-        <div class="res-bot">
-          <div id="sendWrap"
-            style="display:flex;flex-direction:column;gap:11px;opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s">
-            <div class="send-row">
-              <div class="send-lbl">TRANSMITTING</div>
-              <div class="send-bar"><div class="send-fill" id="sendLine"></div></div>
-              <div class="send-dot"></div>
-            </div>
-            <div class="del-card" id="delCard"
-              style="opacity:0;transform:translateY(10px);transition:opacity .5s .5s,transform .5s .5s">
-              <div class="del-ico-wrap">
-                <div class="del-ring"></div><div class="del-ring"></div><div class="del-ring"></div>
-                <div class="del-ico">📨</div>
-              </div>
-              <div class="del-info">
-                <div class="del-title">담당자에게 전달 완료</div>
-                <div class="del-sub" id="emailStatus">이메일 발송 중...</div>
-              </div>
-              <div class="del-badge">전달됨</div>
-            </div>
-            <button class="again-btn" onclick="restart()">↩ 처음으로 돌아가기</button>
+          <div class="res-id-row">
+            <div class="res-status-dot"></div>
+            <div class="res-id-label">RECEIPT NO.</div>
+            <div class="res-id-val" id="receiptNo">—</div>
+            <div class="res-id-sep"></div>
+            <div class="res-id-label" id="receiptTime">—</div>
           </div>
         </div>
+
+        <!-- 민원요지 카드 (헤더 바로 아래 붙게) -->
+        <div style="padding:14px 18px 0">
+          <div class="gist-card" id="gistCard" style="opacity:0;transform:translateY(10px);transition:opacity .4s .1s,transform .4s .1s">
+            <div class="gist-label">민원 요지</div>
+            <div class="gist-text" id="gistText">—</div>
+          </div>
+        </div>
+
+        <!-- 섹션 카드들 -->
+        <div class="res-body" id="resBody">
+          <!-- JS로 동적 생성 -->
+        </div>
+
       </div>
     </div>
 
@@ -567,129 +583,193 @@ const CFG = {
 let cur = 0;
 emailjs.init(CFG.emailjsPublicKey);
 
-/* ── 답변 텍스트 포맷터 ──
-   구조:
-   첫 줄 "귀하께서 접수하신 민원은" → 굵게 진하게 (msg-gist)
-   1차/이용제한/경고/규정 언급 줄 → teal 강조 (msg-rule)
-   CLOSING 줄 → 흐리게 (msg-closing)
-   나머지 → 일반 (msg-body)
-*/
-function formatAiText(raw) {
-  if (!raw) return '';
-  const lines = raw.split('\n');
-  let html = '';
-  let firstDone = false;
-
-  for (const line of lines) {
-    const t = line.trim();
-    if (!t) { html += '<br>'; continue; }
-
-    const isGist    = !firstDone && t.includes('귀하께서 접수하신 민원은');
-    const isClosing = t.includes('우리 도서관에 대한') || t.includes('오늘도 즐거운') || t.includes('자세한 문의는');
-    const isRule    = !isGist && !isClosing && (
-      t.includes('1차') || t.includes('이용제한') || t.includes('경고') || t.includes('주의') ||
-      t.match(/\d+℃/) || (t.includes('운영') && t.includes('℃')) ||
-      t.includes('고객센터') || t.includes('1899-') || t.includes('민간 사업자')
-    );
-
-    if (isGist) {
-      html += `<span class="msg-gist">${t.replace(/'([^']+)'/, `'<span style="color:var(--teal2);font-weight:900">$1</span>'`)}</span>`;
-      firstDone = true;
-    } else if (isClosing) {
-      html += `<span class="msg-closing">${t}</span>`;
-    } else if (isRule) {
-      html += `<span class="msg-rule">${t}</span>`;
-    } else {
-      html += `<span class="msg-body">${t}</span>`;
-      firstDone = true;
-    }
-  }
-  return html;
+/* ── 유틸 ── */
+function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+function genReceiptNo(){
+  const d=new Date();
+  return `JL-${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}-${String(Math.floor(Math.random()*9000)+1000)}`;
+}
+function formatTime(){
+  const d=new Date();
+  return d.toLocaleString('ko-KR',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}).replace(/\. /g,'.').replace(' ','  ');
 }
 
-function onTa(el) {
-  document.getElementById('taLen').textContent = el.value.length;
-  document.getElementById('btnNext1').disabled = !el.value.trim();
+/* ── 화면 전환 ── */
+function onTa(el){
+  document.getElementById('taLen').textContent=el.value.length;
+  document.getElementById('btnNext1').disabled=!el.value.trim();
 }
-
-function go(n) {
-  const from = document.getElementById('s'+cur);
-  const to   = document.getElementById('s'+n);
-  from.className = 'screen '+(n>cur?'hide-left':'hide-right');
-  to.className   = 'screen show';
-  cur = n;
-  document.getElementById('progFill').style.width = [0,42,100][cur]+'%';
-  if (n===2) done();
+function go(n){
+  const from=document.getElementById('s'+cur);
+  const to=document.getElementById('s'+n);
+  from.className='screen '+(n>cur?'hide-left':'hide-right');
+  to.className='screen show';
+  cur=n;
+  document.getElementById('progFill').style.width=[0,42,100][cur]+'%';
+  if(n===2) done();
 }
-function back() { if (cur>0) go(cur-1); }
-function next() {
-  if (!document.getElementById('ta').value.trim()) { toast('민원 내용을 입력해 주세요'); return; }
+function back(){ if(cur>0) go(cur-1); }
+function next(){
+  if(!document.getElementById('ta').value.trim()){toast('민원 내용을 입력해 주세요');return;}
   go(2);
 }
-function restart() {
-  document.getElementById('ta').value = '';
-  document.getElementById('taLen').textContent = '0';
-  document.getElementById('btnNext1').disabled = true;
-  document.getElementById('phLoad').style.opacity  = '1';
-  document.getElementById('phLoad').style.pointerEvents = 'all';
-  document.getElementById('phResult').style.opacity = '0';
-  document.getElementById('phResult').style.pointerEvents = 'none';
-  document.getElementById('aiMsg').innerHTML = '';
-  document.getElementById('aiBubble').style.opacity = '0';
-  document.getElementById('aiBubble').style.transform = 'translateY(10px)';
-  document.getElementById('sendWrap').style.opacity = '0';
-  document.getElementById('sendWrap').style.transform = 'translateY(10px)';
-  document.getElementById('sendLine').style.width = '0%';
-  document.getElementById('delCard').style.opacity = '0';
-  document.getElementById('delCard').style.transform = 'translateY(10px)';
-  document.getElementById('emailStatus').textContent = '이메일 발송 중...';
-  [0,1,2,3].forEach(i=>{
-    document.getElementById('pc'+i).className='pcard';
-    document.getElementById('pf'+i).style.width='0%';
+
+/* ── 조치기준 파싱 → 테이블 행 ── */
+function parsePenaltyRows(penaltyStr){
+  // "1차: 주의 / 2차: 경고 / 3차: 30일 도서관 이용제한 / ..."
+  return penaltyStr.split('/').map(s=>s.trim()).filter(Boolean).map(s=>{
+    const m=s.match(/^(\d+차):\s*(.+)$/);
+    return m?{nth:m[1],val:m[2]}:{nth:'',val:s};
   });
-  go(0);
 }
 
-async function done() {
-  const content = document.getElementById('ta').value.trim();
+/* ── 결과지 렌더링 ── */
+function renderResult(data){
+  // 접수번호/시간
+  document.getElementById('receiptNo').textContent = genReceiptNo();
+  document.getElementById('receiptTime').textContent = formatTime();
+
+  // 민원요지
+  const gistEl = document.getElementById('gistText');
+  const gistCard = document.getElementById('gistCard');
+  if(data.gist){
+    // 따옴표 안 핵심어 teal 강조
+    gistEl.innerHTML = `귀하께서 접수하신 민원은 <em>'${data.gist}'</em>에 관한 것으로 이해됩니다.`;
+  } else {
+    gistEl.textContent = '귀하의 민원을 접수하였습니다.';
+  }
+  setTimeout(()=>{
+    gistCard.style.opacity='1';
+    gistCard.style.transform='translateY(0)';
+  },100);
+
+  const body = document.getElementById('resBody');
+  body.innerHTML='';
+
+  // 섹션 카드 생성
+  const sections = data.sections || [];
+
+  if(sections.length===0){
+    // 기본값 카드
+    const dc = document.createElement('div');
+    dc.className='default-card';
+    dc.innerHTML=`
+      <div class="default-card-ico">📬</div>
+      <div class="default-card-title">민원이 접수되었습니다</div>
+      <div class="default-card-sub">담당자가 내용을 확인한 후<br>빠르게 안내드리겠습니다.</div>
+    `;
+    body.appendChild(dc);
+    setTimeout(()=>dc.classList.add('in'),200);
+  } else {
+    sections.forEach((sec,i)=>{
+      const card=document.createElement('div');
+      card.className='sec-card';
+
+      if(sec.type==='sanction'){
+        const rows = parsePenaltyRows(sec.penalty||'');
+        const rowsHtml = rows.map(r=>`
+          <div class="penalty-row">
+            <div class="p-nth">${r.nth}</div>
+            <div class="p-val">${r.val}</div>
+          </div>`).join('');
+        card.innerHTML=`
+          <div class="sc-head">
+            <div class="sc-ico sanction">⚖️</div>
+            <div class="sc-head-info">
+              <div class="sc-type-badge sanction"><span class="sc-type-dot"></span>위반행위 해당</div>
+              <div class="sc-title">${sec.title||'이용규정 위반'}</div>
+            </div>
+            ${sec.no?`<div class="sc-no">#${String(sec.no).padStart(2,'0')}</div>`:''}
+          </div>
+          <div class="sc-body">
+            ${sec.act?`<div class="sc-act">${sec.act}</div>`:''}
+            ${rows.length>0?`
+            <div class="penalty-wrap">
+              <div class="penalty-head">
+                <span>차수</span><span>조치기준</span>
+              </div>
+              ${rowsHtml}
+            </div>`:''}
+          </div>`;
+      } else {
+        // topic
+        card.innerHTML=`
+          <div class="sc-head">
+            <div class="sc-ico topic">💡</div>
+            <div class="sc-head-info">
+              <div class="sc-type-badge topic"><span class="sc-type-dot"></span>관련 안내</div>
+              <div class="sc-title">${sec.title||'안내사항'}</div>
+            </div>
+          </div>
+          <div class="sc-body">
+            <div class="sc-topic-content">${sec.content||''}</div>
+          </div>`;
+      }
+      body.appendChild(card);
+      setTimeout(()=>card.classList.add('in'), 300+i*150);
+    });
+  }
+
+  // 전달 완료 카드
+  const deliverCard = document.createElement('div');
+  deliverCard.className='deliver-card';
+  deliverCard.id='deliverCard';
+  deliverCard.innerHTML=`
+    <div class="deliver-top">
+      <div class="deliver-ico-wrap">
+        <div class="deliver-ring"></div><div class="deliver-ring"></div><div class="deliver-ring"></div>
+        <div class="deliver-ico">📨</div>
+      </div>
+      <div class="deliver-info">
+        <div class="deliver-title">담당자에게 전달 완료</div>
+        <div class="deliver-sub" id="emailStatus">이메일 발송 중...</div>
+      </div>
+      <div class="deliver-badge">전달됨</div>
+    </div>
+    <div class="deliver-bar-wrap">
+      <div class="deliver-bar-row">
+        <div class="deliver-bar-lbl">TRANSMITTING</div>
+        <div class="deliver-bar"><div class="deliver-fill" id="deliverFill"></div></div>
+      </div>
+      <div class="deliver-status" id="deliverStatus">connecting...</div>
+    </div>
+  `;
+  body.appendChild(deliverCard);
+  setTimeout(()=>deliverCard.classList.add('in'), 400+sections.length*150);
+  setTimeout(()=>{
+    document.getElementById('deliverFill').style.width='100%';
+    document.getElementById('deliverStatus').textContent='transmitted ✓';
+  }, 600+sections.length*150);
+
+  // 다시하기 버튼
+  const againWrap=document.createElement('div');
+  againWrap.innerHTML=`<button class="again-btn" onclick="restart()">↩ 처음으로 돌아가기</button>`;
+  body.appendChild(againWrap);
+
+  setTimeout(confetti, 500+sections.length*150);
+}
+
+/* ── 메인 플로우 ── */
+async function done(){
+  const content=document.getElementById('ta').value.trim();
   document.getElementById('phLoad').style.opacity='1';
   document.getElementById('phLoad').style.pointerEvents='all';
-  document.getElementById('phResult').style.opacity='0';
-  document.getElementById('phResult').style.pointerEvents='none';
+  document.getElementById('phResult').classList.remove('show');
 
   await animateCards();
-  const aiText = await callWorker(content);
-  sendEmail(content, aiText);
+  const data=await callWorker(content);
+  sendEmail(content, data);
 
   document.getElementById('phLoad').style.opacity='0';
   document.getElementById('phLoad').style.pointerEvents='none';
-  await sleep(400);
+  await sleep(350);
 
-  document.getElementById('phResult').style.opacity='1';
-  document.getElementById('phResult').style.pointerEvents='all';
-
-  const bubble = document.getElementById('aiBubble');
-  bubble.style.opacity='1';
-  bubble.style.transform='translateY(0)';
-
-  const msgEl = document.getElementById('aiMsg');
-  msgEl.innerHTML = '<span class="t-cursor"></span>';
-  await sleep(150);
-  msgEl.innerHTML = formatAiText(aiText);
-  await sleep(300);
-
-  const sw = document.getElementById('sendWrap');
-  sw.style.opacity='1'; sw.style.transform='translateY(0)';
-  await sleep(80);
-  document.getElementById('sendLine').style.width='100%';
-  await sleep(700);
-  const dc = document.getElementById('delCard');
-  dc.style.opacity='1'; dc.style.transform='translateY(0)';
-  setTimeout(confetti, 200);
+  document.getElementById('phResult').classList.add('show');
+  renderResult(data);
 }
 
-async function animateCards() {
-  for (let i=0; i<4; i++) {
+async function animateCards(){
+  for(let i=0;i<4;i++){
     document.getElementById('pc'+i).className='pcard on';
     document.getElementById('pf'+i).style.width='100%';
     await sleep(i<3?660:320);
@@ -697,72 +777,80 @@ async function animateCards() {
   }
 }
 
-async function callWorker(content) {
-  const fallback = `귀하께서 접수하신 민원은 '민원 관련'인 것으로 이해됩니다. 불편을 드려 정말 죄송합니다. 담당자에게 즉시 전달되었으며, 확인 후 안내드리겠습니다.\n\n우리 도서관에 대한 관심에 감사드리며, 앞으로도 이용자분들의 쾌적한 시설 이용을 위해 노력하겠습니다.\n\n오늘도 즐거운 하루 보내시길 바라며, 자세한 문의는 안내데스크 방문 또는 유선연락(721-0729) 부탁드립니다.`;
-  try {
-    const res = await fetch(CFG.workerUrl+'/analyze',{
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({content})
+/* ── 워커 호출 — JSON 구조 받음 ── */
+async function callWorker(content){
+  const fallback={
+    gist:'민원 관련',
+    sections:[]
+  };
+  try{
+    const res=await fetch(CFG.workerUrl+'/analyze',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({content})
     });
-let data;
-try {
-  data = await res.json();
-  console.log('WORKER RESPONSE:', data);
-} catch (e) {
-  console.log('JSON PARSE FAIL', e);
-  return fallback;
+    const data=await res.json();
+    if(!data||data.error) return fallback;
+    // 워커가 {gist, sections} 반환
+    return data;
+  }catch(e){ return fallback; }
 }
 
-if (!data || typeof data !== 'object') {
-  console.log('INVALID DATA');
-  return fallback;
-}
-
-if (data.error) {
-  console.log('WORKER ERROR:', data.error);
-  return fallback;
-}
-
-return data.summary;
-  } catch(e) { return fallback; }
-}
-
-async function sendEmail(content, aiSummary) {
-  const date = new Date().toLocaleString('ko-KR',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
-  try {
-    await emailjs.send(CFG.emailjsServiceId, CFG.emailjsTemplateId,
-      {category:'AI 자동분류', content, date, ai_summary:aiSummary});
-    document.getElementById('emailStatus').textContent='이메일 발송 완료 ✓';
-  } catch(e) {
-    document.getElementById('emailStatus').textContent='즉시 처리를 시작합니다';
+async function sendEmail(content, data){
+  const date=new Date().toLocaleString('ko-KR',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
+  const summary=data.gist+(data.sections?.length>0?'\n\n'+data.sections.map(s=>s.title).join(', '):'');
+  try{
+    await emailjs.send(CFG.emailjsServiceId,CFG.emailjsTemplateId,
+      {category:'AI 자동분류',content,date,ai_summary:summary});
+    const el=document.getElementById('emailStatus');
+    if(el) el.textContent='이메일 발송 완료 ✓';
+  }catch(e){
+    const el=document.getElementById('emailStatus');
+    if(el) el.textContent='즉시 처리를 시작합니다';
   }
 }
 
-function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+/* ── 리셋 ── */
+function restart(){
+  document.getElementById('ta').value='';
+  document.getElementById('taLen').textContent='0';
+  document.getElementById('btnNext1').disabled=true;
+  document.getElementById('phLoad').style.opacity='1';
+  document.getElementById('phLoad').style.pointerEvents='all';
+  document.getElementById('phResult').classList.remove('show');
+  document.getElementById('gistCard').style.opacity='0';
+  document.getElementById('gistCard').style.transform='translateY(10px)';
+  document.getElementById('resBody').innerHTML='';
+  [0,1,2,3].forEach(i=>{
+    document.getElementById('pc'+i).className='pcard';
+    document.getElementById('pf'+i).style.width='0%';
+  });
+  go(0);
+}
 
-function confetti() {
-  const c=document.getElementById('cvs'), ctx=c.getContext('2d');
-  c.width=window.innerWidth; c.height=window.innerHeight;
+/* ── 컨페티 ── */
+function confetti(){
+  const c=document.getElementById('cvs'),ctx=c.getContext('2d');
+  c.width=window.innerWidth;c.height=window.innerHeight;
   const cols=['#00cfc0','#3182ff','#00c47a','#f5a000','#1a60e8','#00a898'];
   const shapes=['c','r','t','d'];
   const ps=Array.from({length:120},()=>({
-    x:c.width*.5+(Math.random()-.5)*c.width*.3, y:c.height*.46,
-    vx:(Math.random()-.5)*13, vy:-(Math.random()*18+7),
-    r:Math.random()*5+2.5, col:cols[~~(Math.random()*cols.length)],
-    tilt:0, tv:(Math.random()-.5)*.45, op:1, sh:shapes[~~(Math.random()*shapes.length)]
+    x:c.width*.5+(Math.random()-.5)*c.width*.3,y:c.height*.46,
+    vx:(Math.random()-.5)*13,vy:-(Math.random()*18+7),
+    r:Math.random()*5+2.5,col:cols[~~(Math.random()*cols.length)],
+    tilt:0,tv:(Math.random()-.5)*.45,op:1,sh:shapes[~~(Math.random()*shapes.length)]
   }));
   let f=0;
   (function draw(){
     ctx.clearRect(0,0,c.width,c.height);
     ps.forEach(p=>{
-      ctx.save(); ctx.globalAlpha=p.op; ctx.fillStyle=p.col;
-      ctx.translate(p.x,p.y); ctx.rotate(p.tilt*Math.PI/180);
+      ctx.save();ctx.globalAlpha=p.op;ctx.fillStyle=p.col;
+      ctx.translate(p.x,p.y);ctx.rotate(p.tilt*Math.PI/180);
       if(p.sh==='c'){ctx.beginPath();ctx.arc(0,0,p.r,0,Math.PI*2);ctx.fill();}
       else if(p.sh==='r'){ctx.fillRect(-p.r,-p.r*.5,p.r*2,p.r);}
       else if(p.sh==='t'){ctx.beginPath();ctx.moveTo(0,-p.r);ctx.lineTo(p.r,p.r);ctx.lineTo(-p.r,p.r);ctx.closePath();ctx.fill();}
       else{ctx.save();ctx.rotate(Math.PI/4);ctx.fillRect(-p.r*.7,-p.r*.7,p.r*1.4,p.r*1.4);ctx.restore();}
       ctx.restore();
-      p.x+=p.vx; p.y+=p.vy; p.vy+=.5; p.tilt+=p.tv;
+      p.x+=p.vx;p.y+=p.vy;p.vy+=.5;p.tilt+=p.tv;
       if(p.y>c.height*.66) p.op-=.025;
     });
     f++;
@@ -771,9 +859,9 @@ function confetti() {
   })();
 }
 
-function toast(msg) {
+function toast(msg){
   const el=document.getElementById('toast');
-  el.textContent=msg; el.classList.add('on');
+  el.textContent=msg;el.classList.add('on');
   setTimeout(()=>el.classList.remove('on'),2200);
 }
 </script>
